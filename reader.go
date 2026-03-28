@@ -22,7 +22,7 @@ var (
 
 // Reader is reader to parse responses/requests from the underlying reader.
 type Reader struct {
-	*bufio.Reader
+	*CountingReader
 }
 
 // NewReader returns a RESP3 reader.
@@ -33,7 +33,7 @@ func NewReader(reader io.Reader) *Reader {
 // NewReaderSize returns a new Reader whose buffer has at least the specified size.
 func NewReaderSize(reader io.Reader, size int) *Reader {
 	return &Reader{
-		Reader: bufio.NewReaderSize(reader, size),
+		CountingReader: NewCountingReader(bufio.NewReaderSize(reader, size)),
 	}
 }
 
